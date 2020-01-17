@@ -54,6 +54,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
+    //Image manipulation
+    implementation "com.squareup.picasso:picasso:$picasso_version"
+
     //test
     testImplementation 'junit:junit:4.12'
     testImplementation 'androidx.arch.core:core-testing:2.1.0'

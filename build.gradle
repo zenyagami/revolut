@@ -32,4 +32,5 @@ ext{
     daggerVersion = '2.20'
     gsonVersion = '2.8.5'
     lifecycle_version = '2.2.0-rc03'
+    picasso_version = '2.71828'
 }
