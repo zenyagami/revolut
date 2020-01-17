@@ -1,3 +1,4 @@
 package com.developer.revolut.data.entities
 
-data class RatesDto(val currencyValues: Map<String, Double>)
+data class RatesDto(val currencyCode: String,
+                    val value: Double)
