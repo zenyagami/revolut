@@ -40,15 +40,16 @@
             app:layout_constraintTop_toBottomOf="@+id/currencyCode"
             tools:text="US Dollar" />
 
-        <TextView
+        <EditText
             style="@style/TextAppearance.AppCompat.Headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="100dp"
             android:text="@{Double.toString(rate.price)}"
             app:layout_constraintBottom_toBottomOf="@+id/currencyFlag"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/currencyFlag"
-            tools:text="231312.20" />
+            tools:text="0.89454" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

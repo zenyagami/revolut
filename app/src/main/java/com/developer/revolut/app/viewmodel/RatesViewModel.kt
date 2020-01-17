@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.developer.revolut.app.entities.NavigationEvent
 import com.developer.revolut.domain.usecase.GetCurrentRatesUseCase
 import io.reactivex.disposables.Disposable
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class RatesViewModel @Inject constructor(private val getCurrentRatesUseCase: GetCurrentRatesUseCase) : ViewModel() {
@@ -13,6 +14,8 @@ class RatesViewModel @Inject constructor(private val getCurrentRatesUseCase: Get
 
     fun fetchLatestRates() {
         disposable = getCurrentRatesUseCase.run()
+                .delay(1, TimeUnit.SECONDS)
+                .repeat()
                 .subscribe({
                     navigationEvent.postValue(NavigationEvent.UpdateItemsEvent(it))
                 }, {

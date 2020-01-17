@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.developer.revolut.R
 import com.developer.revolut.app.adapter.RateAdapter
 import com.developer.revolut.app.entities.NavigationEvent
@@ -24,10 +25,14 @@ class MainActivity : BaseMvvmActivity<RatesViewModel>() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
             adapter = this@MainActivity.adapter
+            (itemAnimator as? SimpleItemAnimator)?.let {
+                it.supportsChangeAnimations = false
+            }
         }
         viewModel.navigationEvent.observe(this, Observer {
             processNavigationEvent(it)
         })
+        viewModel.fetchLatestRates()
     }
 
     private fun processNavigationEvent(event: NavigationEvent) {
@@ -44,10 +49,5 @@ class MainActivity : BaseMvvmActivity<RatesViewModel>() {
 
     private fun updateItems(rateList: List<ConversionRateModel>) {
         adapter.setItems(rateList)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.fetchLatestRates()
     }
 }
