@@ -37,7 +37,7 @@ class RatesViewModelTest {
 
         // When
         viewModel.fetchLatestRates()
-        Thread.sleep(1000) //TODO use testScheduler.advanceTimeBy instead Threas sleep
+        Thread.sleep(2000) //TODO use testScheduler.advanceTimeBy instead Thread sleep
 
         // Then
         verify(observer).onChanged(NavigationEvent.UpdateItemsEvent(response))
@@ -53,7 +53,6 @@ class RatesViewModelTest {
 
         // When
         viewModel.fetchLatestRates()
-        //Thread.sleep(1000) //TODO use testScheduler.advanceTimeBy instead Threas sleep
 
         // Then
         verify(observer).onChanged(NavigationEvent.ToastEvent(exception.message!!))
