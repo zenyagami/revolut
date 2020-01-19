@@ -18,8 +18,8 @@ import com.developer.revolut.domain.entities.ConversionRateModel
 class MainActivity : BaseMvvmActivity<RatesViewModel>() {
     override val viewModelType = RatesViewModel::class.java
     private val onPriceChangeListener: OnPriceChangeListener = object : OnPriceChangeListener {
-        override fun onPriceChanged(newPrice: String, currency: String) {
-            viewModel.fetchLatestRates(newPrice.toDouble(), currency)
+        override fun onPriceChanged(currentList: List<ConversionRateModel>, item: ConversionRateModel, newPrice: Double) {
+            viewModel.convertToNewRate(currentList, item.currencyCode, newPrice)
         }
     }
     private val adapter = RateAdapter(onPriceChangeListener)

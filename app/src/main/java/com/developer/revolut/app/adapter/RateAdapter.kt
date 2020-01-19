@@ -44,10 +44,11 @@ class RateAdapter(val onPriceChangeListener: OnPriceChangeListener) : RecyclerVi
                 }
 
                 override fun onTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    if (charSequence.isNullOrEmpty().not()) {
-                        onPriceChangeListener.onPriceChanged(charSequence.toString()
-                                , dataSet.currentList[adapterPosition].currencyCode)
-                    }
+                    // TODO better handling classcastException
+                    val newPrice = if (charSequence.isNullOrEmpty()) 0.0 else charSequence.toString().toDouble()
+                    onPriceChangeListener.onPriceChanged(dataSet.currentList,
+                            dataSet.currentList[adapterPosition],
+                            newPrice)
                 }
             }
             binding.ratePrice.addTextChangedListener(watcher)
