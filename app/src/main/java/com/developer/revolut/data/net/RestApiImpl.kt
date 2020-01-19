@@ -8,13 +8,13 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
-class RestApiImpl @Inject internal constructor() : RestApi {
+class RestApiImpl @Inject constructor(baseUrlProvider: BaseUrlProvider) : RestApi {
     private var service: RevolutService
 
     init {
         val retrofit = Retrofit
                 .Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(baseUrlProvider.getRatesBaseUrl())
                 .addConverterFactory(GsonConverterFactory.create(Gson()))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
@@ -34,9 +34,4 @@ class RestApiImpl @Inject internal constructor() : RestApi {
                     }
                 }
     }
-
-    companion object {
-        private const val BASE_URL = "https://revolut.duckdns.org/"
-    }
-
 }
