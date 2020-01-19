@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.developer.revolut.R
 import com.developer.revolut.app.adapter.RateAdapter
 import com.developer.revolut.app.entities.NavigationEvent
+import com.developer.revolut.app.util.OnPriceChangeListener
 import com.developer.revolut.app.viewmodel.RatesViewModel
 import com.developer.revolut.databinding.ActivityMainBinding
 import com.developer.revolut.domain.entities.ConversionRateModel
@@ -16,7 +17,12 @@ import com.developer.revolut.domain.entities.ConversionRateModel
 // I could use a Fragment instead an activity but in this example there is no many benefits to have a Fragment
 class MainActivity : BaseMvvmActivity<RatesViewModel>() {
     override val viewModelType = RatesViewModel::class.java
-    private val adapter = RateAdapter()
+    private val onPriceChangeListener: OnPriceChangeListener = object : OnPriceChangeListener {
+        override fun onPriceChanged(newPrice: String, currency: String) {
+            viewModel.fetchLatestRates(newPrice.toDouble(), currency)
+        }
+    }
+    private val adapter = RateAdapter(onPriceChangeListener)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +46,6 @@ class MainActivity : BaseMvvmActivity<RatesViewModel>() {
             is NavigationEvent.UpdateItemsEvent -> updateItems(event.rateList)
             is NavigationEvent.ToastEvent -> displayToast(event.message)
         }
-
     }
 
     private fun displayToast(message: String) {

@@ -21,10 +21,10 @@ class RestApiImpl @Inject internal constructor() : RestApi {
         this.service = retrofit.create(RevolutService::class.java)
     }
 
-    override fun getLatestRates(): Single<List<RatesDto>> {
+    override fun getLatestRates(currency: String): Single<List<RatesDto>> {
         // I'm mapping here to not expose all the entities to the Domain layer, this mapping I could do it in the
         // Domain layer as well but depends of what we want to expose
-        return service.getCurrentRates(BASE_CURRENCY)
+        return service.getCurrentRates(currency)
                 .map {
                     ArrayList<RatesDto>().apply {
                         it.rates.forEach { rates ->
@@ -37,8 +37,6 @@ class RestApiImpl @Inject internal constructor() : RestApi {
 
     companion object {
         private const val BASE_URL = "https://revolut.duckdns.org/"
-        // I will leave this as a constant but this can be passed from the whole query for several different currencies ISO
-        private const val BASE_CURRENCY = "EUR"
     }
 
 }

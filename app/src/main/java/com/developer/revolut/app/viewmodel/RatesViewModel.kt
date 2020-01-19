@@ -12,9 +12,25 @@ class RatesViewModel @Inject constructor(private val getCurrentRatesUseCase: Get
     val navigationEvent = MutableLiveData<NavigationEvent>()
     private var disposable: Disposable? = null
 
-    fun fetchLatestRates() {
+    /*fun fetchLatestRates() {
         disposable = getCurrentRatesUseCase.run()
-                .delay(1, TimeUnit.SECONDS)
+                .delay(10, TimeUnit.SECONDS)
+                .repeat()
+                .subscribe({
+                    navigationEvent.postValue(NavigationEvent.UpdateItemsEvent(it))
+                }, {
+                    //TODO add proper error logging/handling
+                    it.printStackTrace()
+                    navigationEvent.postValue(NavigationEvent.ToastEvent(it.message ?: ""))
+                })
+
+    }*/
+
+    fun fetchLatestRates(newPrice: Double = 1.0, currency: String = BASE_CURRENCY) {
+        disposable?.dispose()
+        disposable = getCurrentRatesUseCase.run(currency, newPrice)
+                .toFlowable()
+                .delay(10, TimeUnit.SECONDS)
                 .repeat()
                 .subscribe({
                     navigationEvent.postValue(NavigationEvent.UpdateItemsEvent(it))
@@ -32,4 +48,7 @@ class RatesViewModel @Inject constructor(private val getCurrentRatesUseCase: Get
         super.onCleared()
     }
 
+    companion object {
+        private const val BASE_CURRENCY = "EUR"
+    }
 }

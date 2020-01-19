@@ -4,5 +4,5 @@ import com.developer.revolut.data.entities.RatesDto
 import io.reactivex.Single
 
 interface RestApi {
-    fun getLatestRates(): Single<List<RatesDto>>
+    fun getLatestRates(currency: String): Single<List<RatesDto>>
 }
