@@ -11,7 +11,8 @@ import javax.inject.Singleton
     ApplicationModule::class,
     ActivityModule::class,
     ModuleViewModel::class,
-    RepositoryModule::class])
+    RepositoryModule::class,
+    CurrencyModule::class])
 
 interface AppComponent {
     @Component.Builder

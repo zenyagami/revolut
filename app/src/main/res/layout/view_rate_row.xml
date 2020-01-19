@@ -11,7 +11,7 @@
 
         <ImageView
             android:id="@+id/currencyFlag"
-            imageFlag="@{rate.countryCode}"
+            imageFlag="@{rate.currencyCode}"
             android:layout_width="55dp"
             android:layout_height="55dp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="@{rate.countryCode}"
+            android:text="@{rate.currencyCode}"
             app:layout_constraintLeft_toRightOf="@+id/currencyFlag"
             app:layout_constraintTop_toTopOf="@+id/currencyFlag"
             tools:text="USD" />
@@ -34,7 +34,7 @@
             style="@style/TextAppearance.AppCompat.Subhead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{rate.countryName}"
+            android:text="@{rate.currencyName}"
             android:textColor="@android:color/secondary_text_dark"
             app:layout_constraintBottom_toBottomOf="@+id/currencyFlag"
             app:layout_constraintLeft_toLeftOf="@+id/currencyCode"

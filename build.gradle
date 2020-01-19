@@ -6,7 +6,7 @@ buildscript {
         mavenCentral()
         google()
         jcenter()
-        
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.3'
@@ -20,17 +20,20 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
+
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-ext{
+ext {
     retrofitVersion = '2.5.0'
     daggerVersion = '2.20'
     gsonVersion = '2.8.5'
     lifecycle_version = '2.2.0-rc03'
     picasso_version = '2.71828'
+    mockitoVersion = '3.0.0'
+    hamcrestVersion = '1.3'
+    mockitoKotlinVersion = '1.6.0'
 }

@@ -8,4 +8,5 @@ import javax.inject.Inject
 open class SchedulersProvider @Inject internal constructor() {
     open fun io(): Scheduler = Schedulers.io()
     open fun ui(): Scheduler = AndroidSchedulers.mainThread()
+    open fun computation(): Scheduler = Schedulers.computation()
 }

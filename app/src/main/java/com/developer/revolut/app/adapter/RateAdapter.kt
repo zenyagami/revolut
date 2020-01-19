@@ -46,7 +46,7 @@ class RateAdapter(val onPriceChangeListener: OnPriceChangeListener) : RecyclerVi
                 override fun onTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
                     if (charSequence.isNullOrEmpty().not()) {
                         onPriceChangeListener.onPriceChanged(charSequence.toString()
-                                , dataSet.currentList[adapterPosition].countryCode)
+                                , dataSet.currentList[adapterPosition].currencyCode)
                     }
                 }
             }
@@ -68,7 +68,7 @@ class RateAdapter(val onPriceChangeListener: OnPriceChangeListener) : RecyclerVi
 
     companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<ConversionRateModel>() {
-            override fun areItemsTheSame(oldItem: ConversionRateModel, newItem: ConversionRateModel) = oldItem.countryCode == newItem.countryCode
+            override fun areItemsTheSame(oldItem: ConversionRateModel, newItem: ConversionRateModel) = oldItem.currencyCode == newItem.currencyCode
 
             override fun areContentsTheSame(oldItem: ConversionRateModel, newItem: ConversionRateModel) = oldItem == newItem
         }
