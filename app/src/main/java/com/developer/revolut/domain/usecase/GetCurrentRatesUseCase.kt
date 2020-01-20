@@ -5,13 +5,15 @@ import com.developer.revolut.app.util.round
 import com.developer.revolut.data.net.RestApi
 import com.developer.revolut.domain.entities.ConversionRateModel
 import com.developer.revolut.domain.util.CurrencyHelper
+import com.developer.revolut.domain.util.RateCacheManager
 import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
 
 class GetCurrentRatesUseCase @Inject constructor(private val restApi: RestApi,
                                                  private val scheduler: SchedulersProvider,
-                                                 private val currencyHelper: CurrencyHelper) {
+                                                 private val currencyHelper: CurrencyHelper,
+                                                 private val cacheManager: RateCacheManager) {
 
     fun run(): Single<List<ConversionRateModel>> {
         return restApi.getLatestRates(DEFAULT_CURRENCY)
@@ -21,6 +23,7 @@ class GetCurrentRatesUseCase @Inject constructor(private val restApi: RestApi,
                             price = it.value.round(4),
                             currencyName = currencyHelper.getCurrencyCountryName(it.currencyCode)) //I'm assuming the country code it's valid ISO
                 }.toList()
+                .doAfterSuccess{cacheManager.updateCache(it)}
                 .subscribeOn(scheduler.io())
     }
 

@@ -16,7 +16,6 @@ class RatesViewModel @Inject constructor(private val getCurrentRatesUseCase: Get
                                          private val schedulersProvider: SchedulersProvider) : ViewModel() {
     val navigationEvent = MutableLiveData<NavigationEvent>()
     private var disposable: Disposable? = null
-    private var ratesCache: Map<String, Double> = HashMap()
 
     fun fetchLatestRates() {
         disposable?.dispose()
@@ -24,9 +23,6 @@ class RatesViewModel @Inject constructor(private val getCurrentRatesUseCase: Get
                 .toFlowable()
                 .delay(1, TimeUnit.SECONDS)
                 .repeat()
-                .doAfterNext {
-                    saveCache(it)
-                }
                 .subscribeOn(schedulersProvider.io())
                 .subscribe({
                     navigationEvent.postValue(NavigationEvent.UpdateItemsEvent(it))
@@ -40,7 +36,7 @@ class RatesViewModel @Inject constructor(private val getCurrentRatesUseCase: Get
 
     fun convertToNewRate(currentList: List<ConversionRateModel>, currentCurrency: String, basePrice: Double) {
         disposable?.dispose()
-        disposable = convertToRateUseCase.run(currentList, currentCurrency, basePrice, ratesCache)
+        disposable = convertToRateUseCase.run(currentList, currentCurrency, basePrice)
                 .subscribe({
                     navigationEvent.postValue(NavigationEvent.UpdateItemsEvent(it))
                 }, {
@@ -48,12 +44,6 @@ class RatesViewModel @Inject constructor(private val getCurrentRatesUseCase: Get
                     it.printStackTrace()
                     navigationEvent.postValue(NavigationEvent.ToastEvent(it.message ?: ""))
                 })
-    }
-
-    private fun saveCache(originalData: List<ConversionRateModel>) {
-        if (ratesCache.isEmpty()) {
-            ratesCache = originalData.associateBy({ it.currencyCode }, { it.price })
-        }
     }
 
     override fun onCleared() {
