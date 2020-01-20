@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.developer.revolut.app.util.OnPriceChangeListener
 import com.developer.revolut.databinding.ViewRateRowBinding
 import com.developer.revolut.domain.entities.ConversionRateModel
+import java.util.*
 
 class RateAdapter(val onPriceChangeListener: OnPriceChangeListener) : RecyclerView.Adapter<RateAdapter.ViewHolder>() {
     private val dataSet = AsyncListDiffer<ConversionRateModel>(this, diffCallback)
@@ -62,6 +63,17 @@ class RateAdapter(val onPriceChangeListener: OnPriceChangeListener) : RecyclerVi
                     this.setText(conversionRateModel.price.toString())
                     addTextChangedListener(watcher)
                     setSelection(this.length())
+                }
+                setOnFocusChangeListener { view, hasFocus ->
+                    if (hasFocus) {
+                        val original = dataSet.currentList.toMutableList()
+                        Collections.swap(original, 0, adapterPosition)
+                        setItems(original)
+                        //re use to change dataset cache
+                        onPriceChangeListener.onPriceChanged(original,
+                                dataSet.currentList[adapterPosition],
+                                dataSet.currentList[adapterPosition].price)
+                    }
                 }
             }
         }

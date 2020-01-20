@@ -44,7 +44,7 @@ class ConvertToRateUseCase @Inject constructor(private val schedulersProvider: S
                     }
                     newList.toList()
                 }
-                .delay(5, TimeUnit.SECONDS)
+                .delay(1, TimeUnit.SECONDS)
                 .repeat()
                 .subscribeOn(schedulersProvider.io())
     }
