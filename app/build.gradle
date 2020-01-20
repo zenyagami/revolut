@@ -28,6 +28,9 @@ android {
             includeAndroidResources = true
         }
     }
+    lintOptions {
+        disable 'TypographyFractions','TypographyQuotes'
+    }
 }
 
 dependencies {

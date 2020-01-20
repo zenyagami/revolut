@@ -28,7 +28,6 @@ class RatesViewModel @Inject constructor(private val getCurrentRatesUseCase: Get
                     navigationEvent.postValue(NavigationEvent.UpdateItemsEvent(it))
                 }, {
                     //TODO add proper error logging/handling
-                    it.printStackTrace()
                     navigationEvent.postValue(NavigationEvent.ToastEvent(it.message ?: ""))
                 })
 
@@ -41,7 +40,6 @@ class RatesViewModel @Inject constructor(private val getCurrentRatesUseCase: Get
                     navigationEvent.postValue(NavigationEvent.UpdateItemsEvent(it))
                 }, {
                     //TODO add proper error logging/handling
-                    it.printStackTrace()
                     navigationEvent.postValue(NavigationEvent.ToastEvent(it.message ?: ""))
                 })
     }

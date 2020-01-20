@@ -93,7 +93,6 @@ class RatesViewModelTest {
         // When
         viewModel.convertToNewRate(emptyList(),"EUR",2.0)
 
-
         // Then
         verify(observer).onChanged(NavigationEvent.ToastEvent(ioException.message!!))
     }
