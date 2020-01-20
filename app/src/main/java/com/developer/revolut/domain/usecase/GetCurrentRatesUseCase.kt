@@ -11,7 +11,6 @@ import javax.inject.Inject
 
 class GetCurrentRatesUseCase @Inject constructor(private val restApi: RestApi,
                                                  private val scheduler: SchedulersProvider,
-                                                 private val convertToRateUseCase: ConvertToRateUseCase,
                                                  private val currencyHelper: CurrencyHelper) {
 
     fun run(): Single<List<ConversionRateModel>> {
